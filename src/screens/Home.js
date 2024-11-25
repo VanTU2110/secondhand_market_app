@@ -13,6 +13,9 @@ const Home = ({ navigation }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  console.log(loading);
+  
+
   useEffect(() => {
     fetchProducts();
   }, []);
