@@ -3,7 +3,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from "react";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
-import {CartProvider} from "../contexts/cartContext"
+import {CartProvider} from "../contexts/CartContext";
+import HomeScreen from "../screens/Home"; 
+import ProductItem from "../component/ProductItem";
+import CartPage from "../screens/Cart";
 
 const Stack = createStackNavigator();
 
@@ -34,6 +37,16 @@ const Rootnavi = () => {
           name="RegisterScreen"
           component={RegisterScreen}
           options={{ title: "Register" }}
+        />
+        <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ title: "Home" }}
+        />
+        <Stack.Screen
+        name= "CartPage"
+        component={CartPage}
+        options={{ title: "Cart" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

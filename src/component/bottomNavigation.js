@@ -9,7 +9,7 @@ const BottomNavigation = () => {
 
   return (
     <View style={styles.bottomNavigation}>
-      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.bottomButton}>
+      <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.bottomButton}>
         <Ionicons
           name="home-outline"
           size={24}
@@ -31,14 +31,14 @@ const BottomNavigation = () => {
           Danh mục
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Cart')} style={styles.bottomButton}>
+      <TouchableOpacity onPress={() => navigation.navigate('CartPage')} style={styles.bottomButton}>
         <Ionicons
           name="cart-outline"
           size={24}
           color={currentRoute === 'Cart' ? '#007AFF' : '#555555'}
           style={styles.bottomIcon}
         />
-        <Text style={[styles.bottomText, currentRoute === 'Cart' && styles.activeTab]}>
+        <Text style={[styles.bottomText, currentRoute === 'CartPage' && styles.activeTab]}>
           Giỏ hàng
         </Text>
       </TouchableOpacity>

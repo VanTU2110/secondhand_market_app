@@ -6,8 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import url from '../../ipconfig';
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('vantu29032003@gmail.com');
+  const [password, setPassword] = useState('123');
   const [message, setMessage] = useState('');
   const navigation = useNavigation();
 
@@ -27,7 +27,7 @@ const LoginScreen = () => {
 
       navigation.reset({
         index: 0,
-        routes: [{ name: 'ProductList' }],
+        routes: [{ name: 'HomeScreen' }],
       });
     } catch (error) {
       if (error.response) {
