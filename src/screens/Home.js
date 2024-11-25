@@ -7,6 +7,7 @@ import ProductItem from '../component/ProductItem';
 import Header from '../component/Header';
 import BottomNavigation from '../component/bottomNavigation';
 import url from '../../ipconfig';
+import { TouchableOpacity } from 'react-native';
 
 const Home = ({ navigation }) => {
   const { cart, addToCart } = useCart();
@@ -22,6 +23,7 @@ const Home = ({ navigation }) => {
     try {
       const response = await axios.get(`${url}/api/products/getAll`);
       setProducts(response.data);
+      
       setLoading(false);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -48,7 +50,9 @@ const Home = ({ navigation }) => {
       <FlatList
         data={products}
         renderItem={({ item }) => (
-          <ProductItem product={item} onAddToCart={() => handleAddToCart(item)} />
+          <TouchableOpacity style={styles.productItem} onPress={() => navigation.navigate('ProductDetail', { product: item })}>
+            <ProductItem product={item} onAddToCart={() => handleAddToCart(item)} />
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item._id}
         numColumns={2}

@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React from "react";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 // Hàm định dạng giá tiền
 const formatPrice = (price) => {
@@ -8,14 +8,47 @@ const formatPrice = (price) => {
 };
 
 const ProductItem = ({ product, onAddToCart }) => {
+  const { img_url, title, price, discount, sold, tags, promotion } = product;
+
   return (
-    <View style={styles.itemContainer}>
-      <Image source={{ uri: product.img_url[0] }} style={styles.image} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.title}>{product.title}</Text>
-        <Text style={styles.categoryName}>Danh mục: {product.category_id.category_name.trim()}</Text>
-        <Text style={styles.price}>Giá: {formatPrice(product.price)} đ</Text>
+    <View style={styles.container}>
+      {/* Image Section */}
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: img_url[0] }} style={styles.productImage} />
+        {discount && (
+          <View style={styles.discountTag}>
+            <Text style={styles.discountText}>-{discount}%</Text>
+          </View>
+        )}
       </View>
+
+      {/* Title */}
+      <Text style={styles.title} numberOfLines={2}>
+        {title}
+      </Text>
+
+      {/* Tags */}
+      <View style={styles.tagsContainer}>
+        {tags &&
+          tags.map((tag, index) => (
+            <Text key={index} style={styles.tag}>
+              {tag}
+            </Text>
+          ))}
+      </View>
+
+      {/* Sold */}
+      <View style={styles.ratingSoldContainer}>
+        <Text style={styles.sold}>Đã bán {sold || 0}</Text>
+      </View>
+
+      {/* Price */}
+      <Text style={styles.price}>{formatPrice(price)} đ</Text>
+
+      {/* Promotion */}
+      {promotion && <Text style={styles.promotion}>{promotion}</Text>}
+
+      {/* Thêm vào giỏ hàng */}
       <TouchableOpacity style={styles.iconContainer} onPress={() => onAddToCart(product)}>
         <Icon name="cart-outline" size={24} color="#fff" />
         <Text style={styles.iconText}>Thêm vào giỏ</Text>
@@ -25,61 +58,99 @@ const ProductItem = ({ product, onAddToCart }) => {
 };
 
 const styles = StyleSheet.create({
-  itemContainer: {
+  container: {
     flex: 1,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 10,
     margin: 8,
-    padding: 12,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
+    shadowRadius: 5,
+    elevation: 3,
   },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 8,
-    marginRight: 12,
-    resizeMode: 'cover',
+  imageContainer: {
+    position: "relative",
   },
-  infoContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
+  productImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 10,
+    resizeMode: "cover",
+  },
+  discountTag: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    backgroundColor: "#FF5555",
+    borderRadius: 5,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  discountText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "bold",
   },
   title: {
+    marginTop: 10,
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 4,
+    fontWeight: "bold",
+    color: "#333",
   },
-  categoryName: {
+  tagsContainer: {
+    flexDirection: "row",
+    marginTop: 5,
+    flexWrap: "wrap",
+  },
+  tag: {
+    backgroundColor: "#FFD700",
+    color: "#fff",
     fontSize: 12,
-    color: '#555',
-    marginBottom: 4,
+    borderRadius: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    marginRight: 5,
+    marginBottom: 5,
+  },
+  ratingSoldContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  sold: {
+    fontSize: 12,
+    color: "#777",
   },
   price: {
+    marginTop: 10,
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#FF5722',
+    fontWeight: "bold",
+    color: "#FF5555",
+  },
+  promotion: {
+    marginTop: 5,
+    fontSize: 12,
+    color: "#888",
+    backgroundColor: "#F5F5F5",
+    padding: 5,
+    borderRadius: 5,
   },
   iconContainer: {
-    backgroundColor: '#28a745',
+    backgroundColor: "#28a745",
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 6,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 8,
   },
   iconText: {
     marginLeft: 6,
-    color: '#fff',
+    color: "#fff",
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 

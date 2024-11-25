@@ -7,7 +7,7 @@ import {CartProvider} from "../contexts/CartContext";
 import HomeScreen from "../screens/Home"; 
 import ProductItem from "../component/ProductItem";
 import CartPage from "../screens/Cart";
-
+import ProductDetail from "../screens/ProductDetail";
 const Stack = createStackNavigator();
 
 const Rootnavi = () => {
@@ -47,6 +47,11 @@ const Rootnavi = () => {
         name= "CartPage"
         component={CartPage}
         options={{ title: "Cart" }}
+        />
+        <Stack.Screen
+        name="ProductDetail"
+        component={ProductDetail}
+        options={{ title: "Product Detail" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
