@@ -10,6 +10,8 @@ import CartPage from "../screens/Cart";
 import ProductDetail from "../screens/ProductDetail";
 import SearchScreen from "../screens/SearchScreen";
 import ShopSCreen from "../screens/ShopScreen";
+import Checkout from "../screens/CheckOut";
+
 const Stack = createStackNavigator();
 
 const Rootnavi = () => {
@@ -58,12 +60,17 @@ const Rootnavi = () => {
         <Stack.Screen
         name="SearchScreen"
         component={SearchScreen}
-        options={{title: "Search"}}
+        options={{title: "Tìm kiếm sản phẩm"}}
         />
         <Stack.Screen
         name ="ShopScreen"
         component={ShopSCreen}
         options={{title:"Shop"}}
+        />
+        <Stack.Screen
+        name ="CheckOut"
+        component={Checkout}
+        options={{title:"Thanh Toán"}}
         />
       </Stack.Navigator>
     </NavigationContainer>

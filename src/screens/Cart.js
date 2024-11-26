@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // Import icon
 import { useCart } from '../contexts/CartContext';
 import BottomNavigation from '../component/bottomNavigation';
 
-const Cart = () => {
+const Cart = ({ navigation }) => {
   const { cart, addToCart, removeFromCart, clearCart, decreaseQuantity } = useCart();
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -77,11 +77,19 @@ const Cart = () => {
       <View style={styles.footer}>
         <Text style={styles.totalText}>Total: {formatPrice(calculateTotal())} ₫</Text>
         <TouchableOpacity
-          onPress={() => alert('Proceed to checkout with selected items')}
-          style={styles.checkoutButton}
-        >
-          <Text style={styles.checkoutButtonText}>Buy Selected</Text>
-        </TouchableOpacity>
+        onPress={() => {
+          if (selectedItems.length === 0) {
+            alert("Bạn chưa chọn sản phẩm nào!");
+          } else {
+            navigation.navigate('CheckOut', {
+              selectedItems: cart.filter(item => selectedItems.includes(item._id)),
+            });
+          }
+        }}
+        style={styles.checkoutButton}
+      >
+  <Text style={styles.checkoutButtonText}>Buy Selected</Text>
+</TouchableOpacity>
       </View>
       <TouchableOpacity onPress={handleClearCart} style={styles.clearButton}>
         <Text style={styles.clearButtonText}>Clear Cart</Text>
