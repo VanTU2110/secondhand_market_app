@@ -8,6 +8,8 @@ import HomeScreen from "../screens/Home";
 import ProductItem from "../component/ProductItem";
 import CartPage from "../screens/Cart";
 import ProductDetail from "../screens/ProductDetail";
+import SearchScreen from "../screens/SearchScreen";
+import ShopSCreen from "../screens/ShopScreen";
 const Stack = createStackNavigator();
 
 const Rootnavi = () => {
@@ -52,6 +54,16 @@ const Rootnavi = () => {
         name="ProductDetail"
         component={ProductDetail}
         options={{ title: "Product Detail" }}
+        />
+        <Stack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{title: "Search"}}
+        />
+        <Stack.Screen
+        name ="ShopScreen"
+        component={ShopSCreen}
+        options={{title:"Shop"}}
         />
       </Stack.Navigator>
     </NavigationContainer>

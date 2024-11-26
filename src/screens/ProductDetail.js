@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import BottomNavigation from "../component/bottomNavigation";
 import Header from "../component/Header";
 import { useCart } from "../contexts/CartContext"; // Import useCart to access the cart context
+import { Button } from "react-native-elements";
 
 const ProductDetail = ({ route, navigation }) => {
   const { product } = route.params;
@@ -22,7 +23,6 @@ const ProductDetail = ({ route, navigation }) => {
 
         {/* Thông tin sản phẩm */}
         <View style={styles.infoContainer}>
-          <Text style={styles.shopName}>{product.shop_id.shop_name}</Text>
           <Text style={styles.title}>{product.title}</Text>
           <Text style={styles.category}>Danh mục: {product.category_id.category_name}</Text>
           <Text style={styles.description}>Mô tả: {product.description}</Text>
@@ -32,10 +32,21 @@ const ProductDetail = ({ route, navigation }) => {
           <Text style={styles.price}>Giá: {formatPrice(product.price)} ₫</Text>
           <Text style={styles.quantity}>Số lượng có sẵn: {product.quantity}</Text>
         </View>
-
+        <View style={styles.infoShop}>
+          <View style={styles.shopRow}>
+            <Text style={styles.shopName}>{product.shop_id.shop_name}</Text>
+              <Button
+              title="Xem Shop"
+              onPress={() => navigation.navigate("ShopScreen", {
+                shop: product.shop_id._id, // Truyền dữ liệu của shop
+              })}
+              buttonStyle={styles.shopButton}
+              />
+            </View>
+        </View>
         <TouchableOpacity
           style={styles.addToCartButton}
-          onPress={() => addToCart(product)} // Call addToCart from the context
+          onPress={() => addToCart(product)}
         >
           <Icon name="cart-outline" size={20} color="#fff" />
           <Text style={styles.addToCartText}>Thêm vào giỏ hàng</Text>
@@ -74,11 +85,40 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: "100%",
   },
+  infoShop:{
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 5,
+    width: "100%",
+    paddingBottom:20,
+    
+  },
+  shopRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between", // Đặt khoảng cách giữa Text và Button
+    width: "100%", // Đảm bảo hàng nằm trong vùng hiển thị
+  },
   shopName: {
+    flex: 1, // Chiếm phần còn lại của không gian
     fontSize: 16,
     fontWeight: "bold",
     color: "#007bff",
-    marginBottom: 10,
+    marginRight: 10, // Khoảng cách giữa Text và Button
+    numberOfLines: 1, // Giới hạn văn bản trong một dòng
+    ellipsizeMode: "tail", // Thêm dấu "..." nếu văn bản quá dài
+  },
+  shopButton: {
+    minWidth: 100, // Đặt chiều rộng tối thiểu
+    backgroundColor: "#007bff", // Màu nền cho nút
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
   },
   title: {
     fontSize: 20,
@@ -127,6 +167,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginLeft: 8,
   },
+  
 });
 
 export default ProductDetail;

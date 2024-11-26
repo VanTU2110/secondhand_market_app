@@ -35,6 +35,9 @@ const Home = ({ navigation }) => {
     addToCart(product);
     Alert.alert('Thành công', `${product.title} đã được thêm vào giỏ hàng.`);
   };
+  const handleSearchPress = () => {
+    navigation.navigate('SearchScreen'); // Chuyển tới màn hình tìm kiếm
+  };
 
   if (loading) {
     return (
@@ -46,7 +49,8 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Header title="Chợ đồ cũ online" />
+      <Header title="Chợ đồ cũ online"
+      onSearchPress={handleSearchPress} />
       <FlatList
         data={products}
         renderItem={({ item }) => (
@@ -101,8 +105,10 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: '100%',
-    height: 180, // Kích thước hình ảnh sản phẩm
+    height: 120,
     resizeMode: 'cover',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   },
   productInfo: {
     padding: 10,

@@ -48,11 +48,11 @@ const ProductItem = ({ product, onAddToCart }) => {
       {/* Promotion */}
       {promotion && <Text style={styles.promotion}>{promotion}</Text>}
 
-      {/* Thêm vào giỏ hàng */}
+      {/* Thêm vào giỏ hàng
       <TouchableOpacity style={styles.iconContainer} onPress={() => onAddToCart(product)}>
         <Icon name="cart-outline" size={24} color="#fff" />
         <Text style={styles.iconText}>Thêm vào giỏ</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -98,6 +98,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     color: "#333",
+    numberOfLines: 1, // Giới hạn văn bản trong một dòng
+    ellipsizeMode: "tail",
   },
   tagsContainer: {
     flexDirection: "row",

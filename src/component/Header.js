@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Header = ({ onSearch, onCartPress, onProfilePress }) => {
+const Header = ({ searchQuery, onSearchPress, onCartPress, onProfilePress }) => {
   return (
     <View style={styles.header}>
       {/* Logo */}
@@ -12,16 +12,16 @@ const Header = ({ onSearch, onCartPress, onProfilePress }) => {
       </View>
 
       {/* Search Bar */}
-      <View style={styles.searchContainer}>
+      <TouchableOpacity
+        style={styles.searchContainer}
+        onPress={onSearchPress} // Nhấn vào sẽ chuyển sang màn hình tìm kiếm
+      >
         <Ionicons name="search-outline" size={20} color="#888" />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Tìm kiếm sản phẩm..."
-          onChangeText={onSearch}
-        />
-      </View>
+        <Text style={styles.placeholderText}>
+          {searchQuery || 'Tìm kiếm sản phẩm...'}
+        </Text>
+      </TouchableOpacity>
 
-      {/* Action Icons */}
       <View style={styles.actionIcons}>
         <TouchableOpacity onPress={onCartPress}>
           <Ionicons name="cart-outline" size={24} color="#555" style={styles.icon} />
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
-    elevation: 5, // Hiệu ứng nổi trên Android
+    elevation: 5,
   },
   logoContainer: {
     flexDirection: 'row',
@@ -64,12 +64,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     marginHorizontal: 15,
-  },
-  searchInput: {
-    flex: 1,
     height: 40,
+  },
+  placeholderText: {
     marginLeft: 8,
-    color: '#333',
+    color: '#888',
     fontSize: 14,
   },
   actionIcons: {

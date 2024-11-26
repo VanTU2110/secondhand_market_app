@@ -1,64 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, TextInput } from 'react-native';
-import { useCart } from '../contexts/CartContext'; // Import the hook to use cart context
+import Icon from 'react-native-vector-icons/FontAwesome'; // Import icon
+import { useCart } from '../contexts/CartContext';
 import BottomNavigation from '../component/bottomNavigation';
 
 const Cart = () => {
   const { cart, addToCart, removeFromCart, clearCart, decreaseQuantity } = useCart();
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  const handleAddToCart = (product) => {
-    addToCart(product);
+  const handleToggleSelect = (productId) => {
+    if (selectedItems.includes(productId)) {
+      setSelectedItems(selectedItems.filter((id) => id !== productId));
+    } else {
+      setSelectedItems([...selectedItems, productId]);
+    }
   };
 
-  const handleRemoveFromCart = (productId) => {
-    removeFromCart(productId);
-  };
-
-  const handleDecreaseQuantity = (productId) => {
-    decreaseQuantity(productId);
-  };
-
-  const handleIncreaseQuantity = (productId) => {
-    addToCart({ _id: productId });
-  };
-
-  const handleClearCart = () => {
-    clearCart();
-  };
+  const isSelected = (productId) => selectedItems.includes(productId);
 
   const formatPrice = (price) => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
   const calculateTotal = () => {
-    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return cart
+      .filter((item) => selectedItems.includes(item._id))
+      .reduce((sum, item) => sum + item.price * item.quantity, 0);
+  };
+
+  const handleClearCart = () => {
+    clearCart();
+    setSelectedItems([]);
   };
 
   return (
     <View style={styles.container}>
+      <View style={styles.content}>
       <ScrollView>
         {cart.map((item) => (
           <View key={item._id} style={styles.itemContainer}>
             <View style={styles.itemRow}>
+              {/* Tùy chỉnh checkbox với Icon */}
+              <TouchableOpacity onPress={() => handleToggleSelect(item._id)} style={styles.checkboxContainer}>
+                <Icon
+                  name={isSelected(item._id) ? 'check-circle' : 'circle-thin'}
+                  size={24}
+                  color={isSelected(item._id) ? '#28a745' : '#ddd'}
+                />
+              </TouchableOpacity>
               <Image source={{ uri: item.img_url[0] }} style={styles.itemImage} />
               <View style={styles.itemDetails}>
                 <Text style={styles.itemName}>{item.title}</Text>
                 <Text style={styles.itemPrice}>{formatPrice(item.price)} ₫</Text>
                 <View style={styles.quantityContainer}>
-                  <TouchableOpacity onPress={() => handleDecreaseQuantity(item._id)} style={styles.quantityButton}>
+                  <TouchableOpacity onPress={() => decreaseQuantity(item._id)} style={styles.quantityButton}>
                     <Text style={styles.quantityButtonText}>-</Text>
                   </TouchableOpacity>
                   <TextInput
                     style={styles.quantityInput}
                     value={String(item.quantity)}
                     keyboardType="numeric"
-                    editable={false} // Không cho phép chỉnh sửa số lượng trực tiếp
+                    editable={false}
                   />
-                  <TouchableOpacity onPress={() => handleIncreaseQuantity(item._id)} style={styles.quantityButton}>
+                  <TouchableOpacity onPress={() => addToCart({ _id: item._id })} style={styles.quantityButton}>
                     <Text style={styles.quantityButtonText}>+</Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => handleRemoveFromCart(item._id)}>
+                <TouchableOpacity onPress={() => removeFromCart(item._id)}>
                   <Text style={styles.removeButton}>Remove</Text>
                 </TouchableOpacity>
               </View>
@@ -68,23 +76,30 @@ const Cart = () => {
       </ScrollView>
       <View style={styles.footer}>
         <Text style={styles.totalText}>Total: {formatPrice(calculateTotal())} ₫</Text>
-        <TouchableOpacity onPress={() => alert('Proceed to checkout')} style={styles.checkoutButton}>
-          <Text style={styles.checkoutButtonText}>Buy Now</Text>
+        <TouchableOpacity
+          onPress={() => alert('Proceed to checkout with selected items')}
+          style={styles.checkoutButton}
+        >
+          <Text style={styles.checkoutButtonText}>Buy Selected</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={handleClearCart} style={styles.clearButton}>
         <Text style={styles.clearButtonText}>Clear Cart</Text>
       </TouchableOpacity>
-    <BottomNavigation></BottomNavigation>
+      </View>
+      <BottomNavigation/>
     </View>
-    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 10,
     flex: 1,
+  },
+  content: {
+    flex: 1,
+    padding: 15,
   },
   itemContainer: {
     marginBottom: 20,
@@ -92,23 +107,34 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: '#ddd',
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3, // Shadow for Android
   },
   itemRow: {
-    flexDirection: 'row', // Hiển thị nội dung ngang hàng
-    alignItems: 'center', // Căn giữa theo chiều dọc
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  checkboxContainer: {
+    marginRight: 10,
   },
   itemImage: {
     width: 100,
     height: 100,
     resizeMode: 'cover',
-    marginRight: 10, // Khoảng cách giữa ảnh và thông tin
+    borderRadius: 5,
+    marginRight: 10,
   },
   itemDetails: {
-    flex: 1, // Chiếm phần còn lại của không gian
+    flex: 1,
   },
   itemName: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#333',
   },
   itemPrice: {
     fontSize: 14,
@@ -129,6 +155,7 @@ const styles = StyleSheet.create({
   quantityButtonText: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#333',
   },
   quantityInput: {
     width: 50,
@@ -139,7 +166,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   removeButton: {
-    color: 'red',
+    color: '#e74c3c',
     marginTop: 10,
   },
   footer: {
@@ -150,6 +177,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#333',
   },
   checkoutButton: {
     backgroundColor: '#28a745',
@@ -163,13 +191,20 @@ const styles = StyleSheet.create({
   clearButton: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: 'tomato',
+    backgroundColor: '#f39c12',
     borderRadius: 5,
   },
   clearButtonText: {
     color: '#fff',
     textAlign: 'center',
     fontWeight: 'bold',
+  },bottomNavigation: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 60, // Chiều cao của thanh bottomNavigation
+    backgroundColor: '#007AFF',
   },
 });
 
