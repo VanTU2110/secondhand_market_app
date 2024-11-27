@@ -7,7 +7,7 @@ import url from '../../ipconfig';
 
 const { width } = Dimensions.get('window');
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'pending', title: 'Chờ xác nhận' },
@@ -42,8 +42,6 @@ const ProfileScreen = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(response.data);
-        console.log(response.data);
-        
       } catch (error) {
         console.error('Lỗi khi lấy thông tin đơn hàng:', error);
       } finally {
@@ -57,7 +55,10 @@ const ProfileScreen = () => {
   const filterOrdersByStatus = (status) => orders.filter((order) => order.status === status);
 
   const renderOrderItem = ({ item }) => (
-    <View style={styles.orderItem}>
+    <TouchableOpacity
+      style={styles.orderItem}
+      onPress={() => navigation.navigate('OrderDetail', { orderId: item._id })}
+    >
       <Text style={styles.orderTitle}>Mã đơn hàng: {item._id}</Text>
       <FlatList
         data={item.cart}
@@ -73,7 +74,7 @@ const ProfileScreen = () => {
         )}
         keyExtractor={(cartItem) => cartItem._id}
       />
-    </View>
+    </TouchableOpacity>
   );
 
   const renderScene = ({ route }) => {
