@@ -42,18 +42,23 @@ const Checkout = ({ route, navigation }) => {
 
   const groupItemsByShop = () => {
     const groupedItems = {};
-
+  
     selectedItems.forEach(item => {
+      // Lấy giá trị shop_id chính xác
+      const shopId = item.shop_id._id || item.shop_id;
+  
       // Kiểm tra xem shop_id đã có trong nhóm chưa
-      if (!groupedItems[item.shop_id]) {
-        groupedItems[item.shop_id] = [];
+      if (!groupedItems[shopId]) {
+        groupedItems[shopId] = [];
       }
+  
       // Thêm sản phẩm vào mảng tương ứng với shop_id
-      groupedItems[item.shop_id].push(item);
+      groupedItems[shopId].push(item);
     });
-
+  
     return groupedItems;
   };
+  
 
   const handlePlaceOrder = async () => {
     try {
@@ -73,6 +78,8 @@ const Checkout = ({ route, navigation }) => {
         };
   
         const response = await axios.post(`${url}/api/orders/create`, orderDetails);
+        console.log(shopId);
+        
         console.log("Order created:", response.data);
       }
   

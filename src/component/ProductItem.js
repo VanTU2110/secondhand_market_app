@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     color: "#333",
     numberOfLines: 1, // Giới hạn văn bản trong một dòng
     ellipsizeMode: "tail",
+    overflow: "hidden",
   },
   tagsContainer: {
     flexDirection: "row",

@@ -11,6 +11,7 @@ import ProductDetail from "../screens/ProductDetail";
 import SearchScreen from "../screens/SearchScreen";
 import ShopSCreen from "../screens/ShopScreen";
 import Checkout from "../screens/CheckOut";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Stack = createStackNavigator();
 
@@ -72,6 +73,10 @@ const Rootnavi = () => {
         component={Checkout}
         options={{title:"Thanh Toán"}}
         />
+        <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{title:"Profile"}}/>
       </Stack.Navigator>
     </NavigationContainer>
     </CartProvider>

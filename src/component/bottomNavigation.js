@@ -42,14 +42,14 @@ const BottomNavigation = () => {
           Giỏ hàng
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')} style={styles.bottomButton}>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.bottomButton}>
         <Ionicons
           name="person-outline"
           size={24}
-          color={currentRoute === 'ProfileScreen' ? '#007AFF' : '#555555'}
+          color={currentRoute === 'Profile' ? '#007AFF' : '#555555'}
           style={styles.bottomIcon}
         />
-        <Text style={[styles.bottomText, currentRoute === 'ProfileScreen' && styles.activeTab]}>
+        <Text style={[styles.bottomText, currentRoute === 'Profile' && styles.activeTab]}>
           Cá nhân
         </Text>
       </TouchableOpacity>
