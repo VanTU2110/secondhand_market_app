@@ -10,6 +10,7 @@ import { Button } from "react-native-elements";
 const ProductDetail = ({ route, navigation }) => {
   const { product } = route.params;
   const { addToCart } = useCart(); // Get addToCart function from the context
+  
 
   const formatPrice = (price) => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
