@@ -10,7 +10,7 @@ const OrderDetailScreen = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const route = useRoute();
-  const { orderId } = route.params; // Nhận orderId từ route params
+  const { orderId } = route.params;
 
   useEffect(() => {
     const fetchOrderDetail = async () => {
@@ -58,20 +58,17 @@ const OrderDetailScreen = () => {
     <View style={styles.container}>
       <Text style={styles.orderTitle}>Mã đơn hàng: {orderDetail._id}</Text>
 
-      {/* Thông tin người mua */}
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Thông tin người mua</Text>
         <Text>Email: {orderDetail.buyer_id.email}</Text>
       </View>
 
-      {/* Thông tin cửa hàng */}
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Thông tin cửa hàng</Text>
         <Text>Tên cửa hàng: {orderDetail.shop_id.shop_name}</Text>
         <Text>Địa chỉ: {orderDetail.shop_id.shop_address}</Text>
       </View>
 
-      {/* Danh sách sản phẩm */}
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Danh sách sản phẩm</Text>
         <FlatList
@@ -92,7 +89,6 @@ const OrderDetailScreen = () => {
         />
       </View>
 
-      {/* Tổng giá trị và trạng thái */}
       <View style={styles.card}>
         <Text style={styles.totalPrice}>Tổng giá trị: {orderDetail.total_price.toLocaleString()} VND</Text>
         <Text style={[styles.status, { color: orderDetail.status === 'completed' ? 'green' : 'red' }]}>
@@ -108,35 +104,45 @@ const OrderDetailScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#f7f7f7' },
-  orderTitle: { fontSize: 22, fontWeight: 'bold', color: '#2c3e50', marginBottom: 15 },
+  container: { flex: 1, padding: 20, backgroundColor: '#e9f5ff' },
+  orderTitle: { fontSize: 24, fontWeight: 'bold', color: '#1e88e5', marginBottom: 20 },
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  loadingText: { fontSize: 16, color: '#7f8c8d' },
+  loadingText: { fontSize: 16, color: '#555' },
   errorContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  errorText: { fontSize: 16, color: 'red' },
+  errorText: { fontSize: 16, color: 'red', marginTop: 10 },
   emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  emptyText: { fontSize: 16, color: '#95a5a6' },
+  emptyText: { fontSize: 16, color: '#777' },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     padding: 15,
-    borderRadius: 8,
-    marginBottom: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 4,
+  },
+  sectionTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 10, color: '#34495e' },
+  cartItem: {
+    flexDirection: 'row',
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#f0f8ff',
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    shadowRadius: 3,
   },
-  sectionTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 10, color: '#34495e' },
-  cartItem: { flexDirection: 'row', marginBottom: 15, padding: 10, backgroundColor: '#f8f8f8', borderRadius: 8 },
-  productImage: { width: 80, height: 80, borderRadius: 5 },
+  productImage: { width: 80, height: 80, borderRadius: 10 },
   cartItemDetails: { marginLeft: 15, flex: 1 },
-  cartText: { fontSize: 16, fontWeight: 'bold' },
-  cartSubText: { fontSize: 14, color: '#7f8c8d' },
-  totalPrice: { fontSize: 18, fontWeight: 'bold', color: '#27ae60' },
+  cartText: { fontSize: 16, fontWeight: '600', color: '#2c3e50' },
+  cartSubText: { fontSize: 14, color: '#7f8c8d', marginTop: 5 },
+  totalPrice: { fontSize: 18, fontWeight: '700', color: '#27ae60' },
   status: { fontSize: 16, marginTop: 5 },
   paymentStatus: { fontSize: 16, marginTop: 5 },
-  orderDate: { fontSize: 14, color: '#95a5a6' },
+  orderDate: { fontSize: 14, color: '#95a5a6', marginTop: 10 },
 });
 
 export default OrderDetailScreen;

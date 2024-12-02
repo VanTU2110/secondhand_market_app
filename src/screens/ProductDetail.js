@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/Ionicons";
 import BottomNavigation from "../component/bottomNavigation";
 import Header from "../component/Header";
@@ -10,7 +9,6 @@ import { Button } from "react-native-elements";
 const ProductDetail = ({ route, navigation }) => {
   const { product } = route.params;
   const { addToCart } = useCart(); // Get addToCart function from the context
-  
 
   const formatPrice = (price) => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -36,21 +34,35 @@ const ProductDetail = ({ route, navigation }) => {
         <View style={styles.infoShop}>
           <View style={styles.shopRow}>
             <Text style={styles.shopName}>{product.shop_id.shop_name}</Text>
-              <Button
+            <Button
               title="Xem Shop"
-              onPress={() => navigation.navigate("ShopScreen", {
-                shop: product.shop_id._id, // Truyền dữ liệu của shop
-              })}
+              onPress={() =>
+                navigation.navigate("ShopScreen", {
+                  shop: product.shop_id._id, // Truyền dữ liệu của shop
+                })
+              }
               buttonStyle={styles.shopButton}
-              />
-            </View>
+            />
+          </View>
         </View>
+
+        {/* Nút thêm vào giỏ hàng */}
         <TouchableOpacity
-          style={styles.addToCartButton}
-          onPress={() => addToCart(product)}
+          style={[
+            styles.addToCartButton,
+            product.quantity === 0 && styles.outOfStockButton, // Áp dụng style nếu hết hàng
+          ]}
+          onPress={() => product.quantity > 0 && addToCart(product)} // Ngăn chặn thêm vào giỏ nếu hết hàng
+          disabled={product.quantity === 0} // Vô hiệu hóa nút nếu hết hàng
         >
-          <Icon name="cart-outline" size={20} color="#fff" />
-          <Text style={styles.addToCartText}>Thêm vào giỏ hàng</Text>
+          <Icon
+            name={product.quantity === 0 ? "close-circle-outline" : "cart-outline"} // Biểu tượng thay đổi
+            size={20}
+            color="#fff"
+          />
+          <Text style={styles.addToCartText}>
+            {product.quantity === 0 ? "Hết hàng" : "Thêm vào giỏ hàng"}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
       <BottomNavigation />
@@ -86,7 +98,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: "100%",
   },
-  infoShop:{
+  infoShop: {
     backgroundColor: "#fff",
     padding: 16,
     borderRadius: 10,
@@ -96,8 +108,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     width: "100%",
-    paddingBottom:20,
-    
+    marginBottom: 20,
   },
   shopRow: {
     flexDirection: "row",
@@ -106,13 +117,11 @@ const styles = StyleSheet.create({
     width: "100%", // Đảm bảo hàng nằm trong vùng hiển thị
   },
   shopName: {
-    flex: 1, // Chiếm phần còn lại của không gian
+    flex: 1,
     fontSize: 16,
     fontWeight: "bold",
     color: "#007bff",
     marginRight: 10, // Khoảng cách giữa Text và Button
-    numberOfLines: 1, // Giới hạn văn bản trong một dòng
-    ellipsizeMode: "tail", // Thêm dấu "..." nếu văn bản quá dài
   },
   shopButton: {
     minWidth: 100, // Đặt chiều rộng tối thiểu
@@ -162,13 +171,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: "100%",
   },
+  outOfStockButton: {
+    backgroundColor: "#d3d3d3", // Màu xám nhạt
+  },
   addToCartText: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#fff",
     marginLeft: 8,
   },
-  
 });
 
 export default ProductDetail;

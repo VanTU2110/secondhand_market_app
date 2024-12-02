@@ -12,7 +12,7 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   const handleLogin = async () => {
-    const loginUrl = `${url}/api/users/login`;
+    const loginUrl = `${url}/api/auth/login`;
     console.log('Login URL:', loginUrl);
 
     try {

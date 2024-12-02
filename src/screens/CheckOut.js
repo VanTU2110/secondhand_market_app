@@ -87,7 +87,18 @@ const Checkout = ({ route, navigation }) => {
       navigation.navigate('HomeScreen');
     } catch (error) {
       console.error('Lỗi khi đặt hàng:', error);
+       // Kiểm tra nếu lỗi có liên quan đến số lượng vượt quá
+    if (error.response && error.response.status === 400) {
+      const errorMessage = error.response.data.message || 'Đặt hàng không thành công, vui lòng thử lại';
+      // Nếu thông báo lỗi là về số lượng vượt quá, hiển thị thông báo cho người dùng
+      if (errorMessage.includes('quantity exceeds available stock')) {
+        Alert.alert('Lỗi', 'Số lượng sản phẩm vượt quá số lượng trong kho. Vui lòng điều chỉnh lại số lượng.');
+      } else {
+        Alert.alert('Lỗi', errorMessage);
+      }
+    } else {
       Alert.alert('Lỗi', 'Đặt hàng không thành công, vui lòng thử lại');
+    }
     }
   };
   
