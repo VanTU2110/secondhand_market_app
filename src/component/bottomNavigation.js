@@ -20,14 +20,14 @@ const BottomNavigation = () => {
           Trang chủ
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Categories')} style={styles.bottomButton}>
+      <TouchableOpacity onPress={() => navigation.navigate('CategoryScreen')} style={styles.bottomButton}>
         <Ionicons
           name="grid-outline"
           size={24}
           color={currentRoute === 'Categories' ? '#007AFF' : '#555555'}
           style={styles.bottomIcon}
         />
-        <Text style={[styles.bottomText, currentRoute === 'Categories' && styles.activeTab]}>
+        <Text style={[styles.bottomText, currentRoute === 'CategoryScreen' && styles.activeTab]}>
           Danh mục
         </Text>
       </TouchableOpacity>

@@ -23,7 +23,6 @@ const Home = ({ navigation }) => {
     try {
       const response = await axios.get(`${url}/api/products/getAll`);
       setProducts(response.data);
-      
       setLoading(false);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -35,6 +34,7 @@ const Home = ({ navigation }) => {
     addToCart(product);
     Alert.alert('Thành công', `${product.title} đã được thêm vào giỏ hàng.`);
   };
+
   const handleSearchPress = () => {
     navigation.navigate('SearchScreen'); // Chuyển tới màn hình tìm kiếm
   };
@@ -49,8 +49,7 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Header title="Chợ đồ cũ online"
-      onSearchPress={handleSearchPress} />
+      <Header title="Chợ đồ cũ online" onSearchPress={handleSearchPress} />
       <FlatList
         data={products}
         renderItem={({ item }) => (
@@ -70,19 +69,15 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF', // Nền trắng để tăng độ tương phản
+    backgroundColor: '#f2f2f2', // Màu nền nhẹ nhàng, dễ nhìn
     paddingTop: 10,
+    marginTop:20,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5', // Nền dễ nhìn cho phần loading
-  },
-  loadingText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: '#2D9CDB',
+    backgroundColor: '#f9f9f9', // Màu nền cho phần loading
   },
   listContent: {
     paddingHorizontal: 15,
@@ -90,42 +85,42 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     justifyContent: 'space-between', // Giữ khoảng cách đều giữa các phần tử
   },
-  itemContainer: {
-    backgroundColor: '#FFF',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
+  productItem: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
     marginBottom: 15,
     marginHorizontal: 8,
+    elevation: 5, // Tạo hiệu ứng bóng cho các sản phẩm
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
     overflow: 'hidden',
-    width: '45%', // Đảm bảo sản phẩm có độ rộng hợp lý
-    elevation: 5, // Tạo bóng nhẹ cho các sản phẩm
+    width: '45%',
   },
   productImage: {
     width: '100%',
-    height: 120,
+    height: 180,
     resizeMode: 'cover',
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   },
   productInfo: {
     padding: 10,
   },
   productName: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333', // Màu chữ dễ đọc
+    fontWeight: '600',
+    color: '#333',
     marginBottom: 8,
   },
   productPrice: {
     fontSize: 14,
-    color: '#2D9CDB', // Màu chữ của giá sản phẩm
+    color: '#2D9CDB',
     fontWeight: 'bold',
   },
   button: {
-    backgroundColor: '#28a745', // Màu xanh cho nút "Thêm vào giỏ hàng"
+    backgroundColor: '#28a745', // Nút xanh cho thêm vào giỏ hàng
     paddingVertical: 8,
     borderRadius: 5,
     marginTop: 10,

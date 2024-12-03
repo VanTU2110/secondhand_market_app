@@ -13,6 +13,8 @@ import ShopSCreen from "../screens/ShopScreen";
 import Checkout from "../screens/CheckOut";
 import ProfileScreen from "../screens/ProfileScreen";
 import OrderDetailScreen from "../screens/OrderDetailScreen";
+import CategoryScreen from "../screens/CategoryScreen";
+import ReviewScreen from "../screens/ReviewScreen";
 
 
 const Stack = createStackNavigator();
@@ -38,27 +40,27 @@ const Rootnavi = () => {
         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
-          options={{ title: "Login" }}
+          options={{ title: "Đăng nhập" }}
         />
         <Stack.Screen
           name="RegisterScreen"
           component={RegisterScreen}
-          options={{ title: "Register" }}
+          options={{ title: "Đăng kí" }}
         />
         <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ title: "Home" }}
+        options={{ title: "Trang chủ" }}
         />
         <Stack.Screen
         name= "CartPage"
         component={CartPage}
-        options={{ title: "Cart" }}
+        options={{ title: "Giỏ hàng" }}
         />
         <Stack.Screen
         name="ProductDetail"
         component={ProductDetail}
-        options={{ title: "Product Detail" }}
+        options={{ title: "Chi tiết sản phẩm" }}
         />
         <Stack.Screen
         name="SearchScreen"
@@ -68,7 +70,7 @@ const Rootnavi = () => {
         <Stack.Screen
         name ="ShopScreen"
         component={ShopSCreen}
-        options={{title:"Shop"}}
+        options={{title:"Cửa hàng"}}
         />
         <Stack.Screen
         name ="CheckOut"
@@ -78,11 +80,19 @@ const Rootnavi = () => {
         <Stack.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{title:"Profile"}}/>
+        options={{title:"Trang cá nhân"}}/>
         <Stack.Screen
         name="OrderDetail"
         component={OrderDetailScreen}
         options={{title:"Chi Tiết Đơn Hàng"}}/>
+        <Stack.Screen
+        name="CategoryScreen"
+        component={CategoryScreen}
+        options={{title:"Danh mục sản phẩm"}}/>
+        <Stack.Screen
+        name="ReviewScreen"
+        component={ReviewScreen}
+        options={{title:"Đánh giá"}}/>
       </Stack.Navigator>
     </NavigationContainer>
     </CartProvider>

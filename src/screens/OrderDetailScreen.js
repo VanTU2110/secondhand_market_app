@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, FlatList, Image, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import url from '../../ipconfig';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -10,6 +10,7 @@ const OrderDetailScreen = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const route = useRoute();
+  const navigation = useNavigation();
   const { orderId } = route.params;
 
   useEffect(() => {
@@ -27,6 +28,16 @@ const OrderDetailScreen = () => {
 
     fetchOrderDetail();
   }, [orderId]);
+
+  const handleReviewPress = () => {
+    if (orderDetail && orderDetail.cart && orderDetail.cart.length > 0) {
+      const product = orderDetail.cart[0]; // Giả sử sản phẩm đầu tiên trong giỏ hàng là sản phẩm cần đánh giá
+      navigation.navigate('ReviewScreen', {
+        productId: product._id,
+        orderId: orderDetail._id,
+      });
+    }
+  };
 
   if (loading) {
     return (
@@ -91,13 +102,20 @@ const OrderDetailScreen = () => {
 
       <View style={styles.card}>
         <Text style={styles.totalPrice}>Tổng giá trị: {orderDetail.total_price.toLocaleString()} VND</Text>
-        <Text style={[styles.status, { color: orderDetail.status === 'completed' ? 'green' : 'red' }]}>
+        <Text style={[styles.status, { color: orderDetail.status === 'completed' ? 'green' : 'red' }]} >
           Trạng thái: {orderDetail.status}
         </Text>
         <Text style={[styles.paymentStatus, { color: orderDetail.payment_status === 'paid' ? 'green' : 'red' }]}>
           Trạng thái thanh toán: {orderDetail.payment_status}
         </Text>
         <Text style={styles.orderDate}>Ngày đặt: {new Date(orderDetail.order_date).toLocaleDateString()}</Text>
+        
+        {/* Hiển thị nút đánh giá khi trạng thái thanh toán là 'paid' */}
+        {orderDetail.status === 'paid' && (
+          <TouchableOpacity style={styles.reviewButton} onPress={handleReviewPress}>
+            <Text style={styles.reviewButtonText}>Đánh giá sản phẩm</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -143,6 +161,17 @@ const styles = StyleSheet.create({
   status: { fontSize: 16, marginTop: 5 },
   paymentStatus: { fontSize: 16, marginTop: 5 },
   orderDate: { fontSize: 14, color: '#95a5a6', marginTop: 10 },
+  reviewButton: {
+    marginTop: 10,
+    backgroundColor: '#3498db',
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  reviewButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
 });
 
 export default OrderDetailScreen;

@@ -24,6 +24,9 @@ export const CartProvider = ({ children }) => {
       return [...prevCart, { ...product, quantity: 1 }];
     });
   };
+  const isReviewAllowed = (order) => {
+    return order.status === 'received' && !order.reviewed;
+  };
   
 
   // Remove product from the cart
@@ -54,7 +57,7 @@ export const CartProvider = ({ children }) => {
   
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart ,decreaseQuantity}}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart ,decreaseQuantity,isReviewAllowed}}>
       {children}
     </CartContext.Provider>
   );
