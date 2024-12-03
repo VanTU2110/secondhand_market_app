@@ -17,7 +17,6 @@ const ReviewScreen = ({ navigation }) => {
   const [userId, setUserId] = useState(null); // State to hold user ID
 
   useEffect(() => {
-    // Fetch user info from AsyncStorage and then get user profile
     const fetchUserInfo = async () => {
       try {
         const token = await AsyncStorage.getItem('token'); // Get token from AsyncStorage
@@ -59,7 +58,7 @@ const ReviewScreen = ({ navigation }) => {
 
       if (response.status === 201) {
         Alert.alert('Thành công', 'Đánh giá của bạn đã được gửi.');
-        navigation.goBack(); // Quay lại màn hình trước đó
+        navigation.goBack(); 
       }
     } catch (error) {
       Alert.alert('Lỗi', 'Đã xảy ra lỗi khi gửi đánh giá.');

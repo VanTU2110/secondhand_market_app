@@ -31,9 +31,10 @@ const OrderDetailScreen = () => {
 
   const handleReviewPress = () => {
     if (orderDetail && orderDetail.cart && orderDetail.cart.length > 0) {
-      const product = orderDetail.cart[0]; // Giả sử sản phẩm đầu tiên trong giỏ hàng là sản phẩm cần đánh giá
+      const product = orderDetail.cart[0]; // Lấy sản phẩm đầu tiên trong giỏ
+    const productId = product.product_id._id;  // Giả sử sản phẩm đầu tiên trong giỏ hàng là sản phẩm cần đánh giá
       navigation.navigate('ReviewScreen', {
-        productId: product._id,
+        productId: productId,
         orderId: orderDetail._id,
       });
     }

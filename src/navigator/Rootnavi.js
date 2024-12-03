@@ -45,54 +45,54 @@ const Rootnavi = () => {
         <Stack.Screen
           name="RegisterScreen"
           component={RegisterScreen}
-          options={{ title: "Đăng kí" }}
+          options={{ title: "Đăng kí",headerShown: false }}
         />
         <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ title: "Trang chủ" }}
+        options={{ headerShown: false  }}
         />
         <Stack.Screen
         name= "CartPage"
         component={CartPage}
-        options={{ title: "Giỏ hàng" }}
+        options={{ title: "Giỏ hàng",headerShown: false  }}
         />
         <Stack.Screen
         name="ProductDetail"
         component={ProductDetail}
-        options={{ title: "Chi tiết sản phẩm" }}
+        options={{ title: "Chi tiết sản phẩm",headerShown: false  }}
         />
         <Stack.Screen
         name="SearchScreen"
         component={SearchScreen}
-        options={{title: "Tìm kiếm sản phẩm"}}
+        options={{title: "Tìm kiếm sản phẩm",headerShown: false }}
         />
         <Stack.Screen
         name ="ShopScreen"
         component={ShopSCreen}
-        options={{title:"Cửa hàng"}}
+        options={{title:"Cửa hàng",headerShown: false }}
         />
         <Stack.Screen
         name ="CheckOut"
         component={Checkout}
-        options={{title:"Thanh Toán"}}
+        options={{title:"Thanh Toán",headerShown: false }}
         />
         <Stack.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{title:"Trang cá nhân"}}/>
+        options={{title:"Trang cá nhân",headerShown: false }}/>
         <Stack.Screen
         name="OrderDetail"
         component={OrderDetailScreen}
-        options={{title:"Chi Tiết Đơn Hàng"}}/>
+        options={{title:"Chi Tiết Đơn Hàng",headerShown: false }}/>
         <Stack.Screen
         name="CategoryScreen"
         component={CategoryScreen}
-        options={{title:"Danh mục sản phẩm"}}/>
+        options={{title:"Danh mục sản phẩm",headerShown: false }}/>
         <Stack.Screen
         name="ReviewScreen"
         component={ReviewScreen}
-        options={{title:"Đánh giá"}}/>
+        options={{title:"Đánh giá",headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
     </CartProvider>
